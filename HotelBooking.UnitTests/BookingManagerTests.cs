@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using HotelBooking.Core;
 using HotelBooking.UnitTests.Fakes;
 using Moq;
@@ -58,56 +59,6 @@ namespace HotelBooking.UnitTests
                     StartDate = DateTime.Now
                   }
                 }
-            };
-            return bookings;
-        }
-
-        public static IEnumerable<object[]> GetBookingsZeroOrHigerNumberRoomIds()
-        {
-            var customer = new Customer
-            {
-                Email = "email@email.com",
-                Id = 1,
-                Name = "email Emailsen"
-            };
-            var room = new Room
-            {
-                Id = 1,
-                Description = "Noice"
-            };
-            var bookings = new List<object[]>
-            {
-                new object[]
-                {
-                    new Booking
-                    {
-                    Customer = customer,
-                    CustomerId = 1,
-                    Id = 1,
-                    Room = room,
-                    EndDate = DateTime.Now.AddDays(10),
-                    IsActive = false,
-                    RoomId =4,
-                    StartDate = DateTime.Now
-                  }
-                },
-                 new object[]
-                {
-                    new Booking
-                    {
-                    Customer = customer,
-                    CustomerId = 1,
-                    Id = 1,
-                    Room = room,
-                    EndDate = DateTime.Now.AddDays(10),
-                    IsActive = false,
-                    RoomId =3,
-                    StartDate = DateTime.Now
-                  }
-
-                }
-
-
             };
             return bookings;
         }
@@ -174,6 +125,21 @@ namespace HotelBooking.UnitTests
             Assert.Throws<ArgumentException>(act);
         }
 
+
+        [Theory]
+        [MemberData(nameof(GetDateData))]
+        public void FindAvailableRoom_StartDateNotInvalid_ThrowsArgumentException(DateTime startDate, DateTime endDate)
+        {
+            //Arange
+            Action act = () => bookingManager.FindAvailableRoom(startDate, endDate);
+
+            //Act
+            Exception ex = Assert.Throws<ArgumentException>(act);
+
+            //Assert
+            Assert.Equal("The start date cannot be in the past or later than the end date.", ex.Message);
+        }
+
         [Fact]
         public void FindAvailableRoom_RoomAvailable_RoomIdNotMinusOne()
         {
@@ -185,6 +151,15 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
+        public static IEnumerable<object[]> GetDateData()
+        {
+            var data = new List<object[]>
+            {
+            new object[] {DateTime.Today.AddDays(-1), DateTime.Today.AddDays(+2) },
+            new object[] {DateTime.Today.AddDays(+2), DateTime.Today.AddDays(-1) }
+            };
+            return data;
+        }
         [Fact]
         public void TestPipelines()
         {
