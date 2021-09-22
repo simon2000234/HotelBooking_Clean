@@ -20,7 +20,6 @@ namespace HotelBooking.UnitTests
         [Fact]
         public void FindAvailableRoom_StartDateNotInTheFuture_ThrowsArgumentException()
         {
-            //nigga
             //Arrange
             DateTime date = DateTime.Today;
 
