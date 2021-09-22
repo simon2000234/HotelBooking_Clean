@@ -67,5 +67,11 @@ namespace HotelBooking.UnitTests
             };
             return data;
         }
+        [Fact]
+        public void TestPipelines()
+        {
+            Assert.Equal(1,1);
+        }
+
     }
 }
