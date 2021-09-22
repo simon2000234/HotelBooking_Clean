@@ -41,5 +41,11 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
+        [Fact]
+        public void TestPipelines()
+        {
+            Assert.Equal(1,1);
+        }
+
     }
 }
