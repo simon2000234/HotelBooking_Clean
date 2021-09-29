@@ -184,7 +184,7 @@ namespace HotelBooking.UnitTests
             //Act
             var createBooking = bookingManagerWithMoqRepos.CreateBooking(booking);
 
-            //
+            //Assert
             Assert.False(createBooking);
         }
 
@@ -264,11 +264,6 @@ namespace HotelBooking.UnitTests
             new object[] {DateTime.Today.AddDays(+2), DateTime.Today.AddDays(-1) }
             };
             return data;
-        }
-        [Fact]
-        public void TestPipelines()
-        {
-            Assert.Equal(1, 1);
         }
 
     }
