@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using HotelBooking.Core;
 using HotelBooking.UnitTests.Fakes;
 using Moq;
 using Xunit;
-using Moq;
 
 namespace HotelBooking.UnitTests
 {
