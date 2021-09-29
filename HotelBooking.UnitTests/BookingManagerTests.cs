@@ -202,6 +202,20 @@ namespace HotelBooking.UnitTests
             Assert.Single(result);
         }
 
+        [Fact]
+        public void GetFullyOccupiedDates_StartDataBiggerThanEndDate_ThrowsArgumentException()
+        {
+            // Arrange
+            DateTime startDate = DateTime.Today.AddDays(6);
+            DateTime endDate = DateTime.Today.AddDays(4);
+
+            // Act
+            Action action = () => bmWithMockData.GetFullyOccupiedDates(startDate, endDate);
+
+            // Asssert
+            Assert.Throws<ArgumentException>(action);
+        }
+
 
         [Fact]
         public void FindAvailableRoom_StartDateNotInTheFuture_ThrowsArgumentException()
