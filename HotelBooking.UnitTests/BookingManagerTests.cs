@@ -186,7 +186,21 @@ namespace HotelBooking.UnitTests
         }
 
         [Fact]
-        public void GetFullyOccupiedDates_WithOneFullyOccupiedDate()
+        public void GetFullyOccupiedDates_NoFullyOccupiedDate_EmptyArray()
+        {
+            // Arrange
+            DateTime startDate = DateTime.Today.AddDays(1);
+            DateTime endDate = DateTime.Today.AddDays(2);
+
+            // Act
+            List<DateTime> result = bmWithMockData.GetFullyOccupiedDates(startDate, endDate);
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetFullyOccupiedDates_WithOneFullyOccupiedDate_SingleElementInArray()
         {
             // Arrange
             DateTime startDate = DateTime.Today.AddDays(1);
@@ -197,6 +211,20 @@ namespace HotelBooking.UnitTests
 
             // Assert
             Assert.Single(result);
+        }
+
+        [Fact]
+        public void GetFullyOccupiedDates_StartDataBiggerThanEndDate_ThrowsArgumentException()
+        {
+            // Arrange
+            DateTime startDate = DateTime.Today.AddDays(6);
+            DateTime endDate = DateTime.Today.AddDays(4);
+
+            // Act
+            Action action = () => bmWithMockData.GetFullyOccupiedDates(startDate, endDate);
+
+            // Asssert
+            Assert.Throws<ArgumentException>(action);
         }
 
 
