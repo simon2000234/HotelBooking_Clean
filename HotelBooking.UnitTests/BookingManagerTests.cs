@@ -161,7 +161,7 @@ namespace HotelBooking.UnitTests
             //Act
             var createBooking = bookingManagerWithMoqRepos.CreateBooking(booking);
 
-            //
+            //Assert
             Assert.True(createBooking);
         }
 
