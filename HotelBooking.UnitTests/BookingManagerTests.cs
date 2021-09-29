@@ -15,7 +15,8 @@ namespace HotelBooking.UnitTests
         private Mock<IRepository<Room>> moqRoomRepository;
         private IBookingManager bookingManagerWithMoqRepos;
 
-        public BookingManagerTests(){
+        public BookingManagerTests()
+        {
 
             IList<Room> rooms = new List<Room>
             {
