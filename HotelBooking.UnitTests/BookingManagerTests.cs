@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HotelBooking.Core;
 using HotelBooking.UnitTests.Fakes;
+using Microsoft.EntityFrameworkCore.Internal;
 using Moq;
 using Xunit;
 
@@ -44,8 +45,8 @@ namespace HotelBooking.UnitTests
                     Room = rooms[0],
                     RoomId = 1,
                     IsActive = true,
-                    StartDate = DateTime.Today.AddDays(1),
-                    EndDate = DateTime.Today.AddDays(3)
+                    StartDate = DateTime.Today.AddDays(3),
+                    EndDate = DateTime.Today.AddDays(6)
                 },
                 new Booking
                 {
@@ -55,8 +56,8 @@ namespace HotelBooking.UnitTests
                     Room = rooms[1],
                     RoomId = 2,
                     IsActive = true,
-                    StartDate = DateTime.Today.AddDays(2),
-                    EndDate = DateTime.Today.AddDays(4)
+                    StartDate = DateTime.Today.AddDays(3),
+                    EndDate = DateTime.Today.AddDays(6)
                 },
                 new Booking
                 {
@@ -67,7 +68,7 @@ namespace HotelBooking.UnitTests
                     RoomId = 3,
                     IsActive = true,
                     StartDate = DateTime.Today.AddDays(3),
-                    EndDate = DateTime.Today.AddDays(5)
+                    EndDate = DateTime.Today.AddDays(6)
                 },
                 new Booking
                 {
@@ -77,7 +78,7 @@ namespace HotelBooking.UnitTests
                     Room = rooms[3],
                     RoomId = 4,
                     IsActive = true,
-                    StartDate = DateTime.Today.AddDays(2),
+                    StartDate = DateTime.Today.AddDays(3),
                     EndDate = DateTime.Today.AddDays(6)
                 }
             };
@@ -136,6 +137,240 @@ namespace HotelBooking.UnitTests
             };
             return bookings;
         }
+
+        // Part 3 Tests Start
+
+        [Fact]
+        public void a1_CreateBooking_SDinB_EDinA_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer {Id = 2, Email = "casper@mail.com", Name = "Casper"},
+                Room = new Room {Id = 1, Description = "Room 1 Description"},
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(2),
+                EndDate = DateTime.Today.AddDays(7)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a2_CreateBooking_SDinB_EDinB_SucceedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(2),
+                EndDate = DateTime.Today.AddDays(2)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void a3_CreateBooking_SDinA_EDinA_SucceedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(7),
+                EndDate = DateTime.Today.AddDays(7)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void a4_CreateBooking_SDinB_EDinO1_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(2),
+                EndDate = DateTime.Today.AddDays(3)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a5_CreateBooking_SDinB_EDinO2_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(2),
+                EndDate = DateTime.Today.AddDays(6)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a6_CreateBooking_SDinO1_EDinA_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(3),
+                EndDate = DateTime.Today.AddDays(7)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a7_CreateBooking_SDinO2_EDinA_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(6),
+                EndDate = DateTime.Today.AddDays(7)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a8_CreateBooking_SDinO1_EDinO1_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(3),
+                EndDate = DateTime.Today.AddDays(3)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void a9_CreateBooking_SDinO1_EDinO2_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(3),
+                EndDate = DateTime.Today.AddDays(6)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void aa10_CreateBooking_SDinO2_EDinO2_FailedBooking()
+        {
+            // Arrange
+            Booking newBooking = new Booking
+            {
+                Id = 3,
+                CustomerId = 3,
+                Customer = new Customer { Id = 2, Email = "casper@mail.com", Name = "Casper" },
+                Room = new Room { Id = 1, Description = "Room 1 Description" },
+                RoomId = 3,
+                IsActive = true,
+                StartDate = DateTime.Today.AddDays(6),
+                EndDate = DateTime.Today.AddDays(6)
+            };
+
+            // Act
+            Boolean result = bmWithMockData.CreateBooking(newBooking);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        // Part 3 Tests End
 
 
 
