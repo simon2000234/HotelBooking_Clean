@@ -22,5 +22,54 @@ Scenario: Create A booking When no rooms are availiable
 Scenario: Create a booking for testcase 1
 	Given There is a period where all rooms are booked
 	When i create a booking with a start date before this period and an end date after this period
-	The new booking should be rejected
+	Then the new booking should be rejected
+
+
+Scenario: Create a booking for testcase 2
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date before this period and an end date before this period
+	Then the new booking should be accepted
+
+Scenario: Create a booking for testcase 3
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date after this period and an end date after this period
+	Then the new booking should be accepted
+
+Scenario: Create a booking for testcase 4
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date before this period and an end date at the end of this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 5
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date before this period and an end date at the beginning of this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 6
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date at the beginning of this period and an end date after this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 7
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date at the end of this period and an end date after this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 8
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date at the beginning of this period and an end at the end of this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 9
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date at the end of this period and an end at the end of this period
+	Then the new booking should be rejected
+
+Scenario: Create a booking for testcase 10
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date at the beginning of this period and an end at the beginning of this period
+	Then the new booking should be rejected
+
+
+
 
