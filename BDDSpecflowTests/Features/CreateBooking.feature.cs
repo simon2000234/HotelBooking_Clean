@@ -81,16 +81,16 @@ namespace BDDSpecflowTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create A booking When no rooms a availiable")]
+        [Xunit.SkippableFactAttribute(DisplayName="Create A booking When no rooms are availiable")]
         [Xunit.TraitAttribute("FeatureTitle", "CreateBooking")]
-        [Xunit.TraitAttribute("Description", "Create A booking When no rooms a availiable")]
+        [Xunit.TraitAttribute("Description", "Create A booking When no rooms are availiable")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        public virtual void CreateABookingWhenNoRoomsAAvailiable()
+        public virtual void CreateABookingWhenNoRoomsAreAvailiable()
         {
             string[] tagsOfScenario = new string[] {
                     "mytag"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create A booking When no rooms a availiable", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create A booking When no rooms are availiable", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

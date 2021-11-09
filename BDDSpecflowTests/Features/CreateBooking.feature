@@ -17,3 +17,10 @@ Scenario: Create A booking When no rooms are availiable
 	| Id | StartDate  | EndDate    | IsActive | CustomerId | RoomId |
 	| 3  | 08/11/2040 | 08/16/2040 | False    | 3          | 1      |
 	Then the new booking should be rejected
+
+
+Scenario: Create a booking for testcase 1
+	Given There is a period where all rooms are booked
+	When i create a booking with a start date before this period and an end date after this period
+	The new booking should be rejected
+
